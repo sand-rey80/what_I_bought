@@ -1,11 +1,16 @@
 from fastapi import FastAPI
 import os
 from dotenv import load_dotenv
+from pydentic import BadeModel
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 app = FastAPI()
+
+
+class Data_qr(BaseModel):
+    descr: str
 
 @app.get("/")
 async def start():
