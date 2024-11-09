@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import os
 from dotenv import load_dotenv
-from pydentic import BadeModel
+from pydantic import BaseModel
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
@@ -14,7 +14,7 @@ class Data_qr(BaseModel):
 
 @app.get("/")
 async def start():
-    return {"data":"ok"}
+    return {"data":"ok1"}
 
 if __name__ == '__main__':
     load_dotenv()
