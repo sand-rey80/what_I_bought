@@ -9,10 +9,7 @@ from pydantic import BaseModel
 app = FastAPI()
 
 
-class Data_qr(BaseModel):
-    descr: str
-
-@app.get("/")
+app.get("/")
 async def start():
     return {"data":"ok1"}
 

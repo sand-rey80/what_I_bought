@@ -1,17 +1,17 @@
 from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
-
+from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, sessionmaker
 
 engine = create_async_engine("sqlite+aiosqlite:///sqdata.db")
-
 ses_maker = async_sessionmaker(engine)
 
 class Model(DeclaratibeBase):
-    pass
+    __abstract__ = True
+    id: Mapped[int] = mapped_column(primary_key=True)
+
 
 class TicketsOrm(Model):
     __tablename__ = "tickets"
-    id: Mapped[int] = mapped_column(primary_key=True)
+    qr_value: Mapped[str]
 
 
 async def create_tables():

@@ -974,7 +974,7 @@ files = [
 ]
 
 [package.dependencies]
-greenlet = {version = "!=0.4.17", markers = "python_version < \"3.13\" and (platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\")"}
+greenlet = {version = "!=0.4.17", optional = true, markers = "python_version < \"3.13\" and (platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\") or extra == \"asyncio\""}
 typing-extensions = ">=4.6.0"
 
 [package.extras]
@@ -1404,4 +1404,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9e1173a70fcabca8797f2b68c7b3228f57c60d6999f633303222069277e3d2e5"
+content-hash = "8789d7423a02d57c1f6ca4a1edd527f3d59deccefd7f268448ad625eb982f036"
