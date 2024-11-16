@@ -3,3 +3,5 @@ https://leftjoin.ru/all/nalog-ru-client/
 Реализация:
 https://github.com/valiotti/get-receipts/blob/master/nalog_python.py
 
+Сервис проброса локалхоста в эти ваши интернеты
+ssh -R 80:localhost:8000 serveo.net

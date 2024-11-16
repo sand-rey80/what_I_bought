@@ -12,6 +12,7 @@ uvicorn = "^0.32.0"
 sqlalchemy = {extras = ["asyncio"], version = "^2.0.36"}
 pydantic = "^2.9.2"
 aiosqlite = "^0.20.0"
+requests = "^2.32.3"
 
 
 [build-system]
