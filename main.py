@@ -23,6 +23,6 @@ async def telega():
 
 if __name__ == '__main__':
     load_dotenv()
-    uvicorn.run("main:app", port=8000, host="0.0.0.0", reload=True)
+#    uvicorn.run("main:app", port=8000, host="0.0.0.0", reload=True)
 #    BOT_TOKEN = os.getenv('BOT_TOKEN')
 
