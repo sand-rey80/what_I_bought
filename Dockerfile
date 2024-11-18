@@ -13,8 +13,9 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
 
 COPY . .
 
-RUN apt-get install curl --no-install-recommends -y
-RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/etc/poetry python3 -
+#RUN apt-get install curl --no-install-recommends -y
+#RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/etc/poetry python3 -
+RUN pip3 install poetry
 
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi --no-dev --isolated
