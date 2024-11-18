@@ -11,12 +11,12 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
     PIP_NO_CACHE_DIR=1 \
     POETRY_VERSION=1.8.4
 
-RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/etc/poetry python3 -
-RUN python -m venv /venv
-
 COPY pyproject.toml poetry.lock ./
 
-COPY . .
+RUN apt-get install --no-install-recommends -y curl \
+    && curl -sSL https://install.python-poetry.org | POETRY_HOME=/etc/poetry python3 -
+
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi --no-dev --isolated
+
 RUN python main.py
