@@ -18,6 +18,6 @@ COPY . .
 RUN pip3 install poetry
 
 RUN poetry config virtualenvs.create false \
-  && poetry install --no-interaction --no-ansi --no-dev --isolated
+  && poetry install --no-interaction --no-ansi --no-dev
 
 RUN python main.py
