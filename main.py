@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher
 import uvicorn
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
-import bot
+import bot, db
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
@@ -25,9 +25,9 @@ async def telega():
 
 
 if __name__ == '__main__':
-    #load_dotenv()
     try:
         asyncio.run(bot.main())
+
     except KeyboardInterrupt:
         pass
 #    uvicorn.run("main:app", port=8000, host="0.0.0.0", reload=True)
