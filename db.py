@@ -1,6 +1,6 @@
 import datetime
 from typing import List, Any, Awaitable, Callable, Dict
-from sqlalchemy import func
+from sqlalchemy import func, select, DateTime
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 
@@ -30,18 +30,35 @@ class Model(DeclarativeBase):
     id: Mapped[int] = mapped_column(primary_key=True)
     create_date: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
 
+    def to_dict(self) -> dict:
+        """Универсальный метод для конвертации объекта SQLAlchemy в словарь"""
+        # Получаем маппер для текущей модели
+        columns = class_mapper(self.__class__).columns
+        # Возвращаем словарь всех колонок и их значений
+        return {column.key: getattr(self, column.key) for column in columns}
+
 class Ticket(Model):
     __tablename__ = "tickets"
     qr_value: Mapped[str]
     tg_id: Mapped[str]
-    def __repr__(self) -> str:
-        return f'Ticket(id={self.id}, create_date ={self.create_date}, qr_value={serf.qr_value}, tg_id={self.tg_id}'
+   # def __repr__(self) -> str:
+    #    return f'Ticket(id={self.id}, create_date ={self.create_date}, qr_value={self.qr_value}, tg_id={self.tg_id}'
+
 
 async def insert_ticket(async_session: session_maker, ticket: Ticket) -> None:
     async with async_session() as session:
         #async with session.begin():
             session.add(ticket)
             await session.commit()
+
+
+async def get_tickets(date_from: datetime, date_to: datetime) -> Dict:
+    async with session_maker() as session:
+        query = select(Ticket).filter(Ticket.create_date.between(date_from, date_to))
+        result = await session.execute(query)
+        ticket_list = result.scalars().all()
+        return ticket_list
+
 
 async def create_tables():
     async with engine.begin() as conn:
