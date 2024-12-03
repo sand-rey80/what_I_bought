@@ -49,7 +49,7 @@ async def bot_start(bot):
 
 async def bot_stop(bot):
     print('stop bot')
-    await drop_all_tables()
+    #await drop_all_tables()
 
 
 async def main():
@@ -59,3 +59,7 @@ async def main():
     await dp.start_polling(bot)
 
 
+try:
+    asyncio.run(main())
+except KeyboardInterrupt:
+    pass
