@@ -19,6 +19,7 @@ RUN pip3 install poetry
 
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi --no-dev
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "&&", "python3", "bot.py"]
 
-#RUN python main.py
+RUN python3 bot.py
+#CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+RUN python3 main.py
