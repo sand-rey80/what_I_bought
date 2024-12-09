@@ -32,12 +32,13 @@ async def get(date_from, date_to):
     date_dt = datetime.datetime.strptime(date_to, '%Y-%m-%d')
     result = await db.get_tickets( date_df, date_dt)
     await asyncio.sleep(2)
-    return  result
+    return result
 
 
 def main():
-    #uvicorn.run("main:app", port=8000, host="127.0.0.1", reload=True)
-    uvicorn.run("main:app", port=8040, host="0.0.0.0")
+    uvicorn.run("main:app", port=8000, host="127.0.0.1", reload=True)
+    #uvicorn.run("main:app", port=8000, host="0.0.0.0")
+
 
 if __name__ == '__main__':
     try:

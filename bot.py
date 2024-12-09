@@ -8,11 +8,11 @@ from aiogram import Bot, Dispatcher, F
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 
-import cv2
 from pyzbar.pyzbar import decode
+from PIL import Image
 
 from db import DataBaseSession, session_maker, insert_ticket, Ticket, create_tables, drop_all_tables
-#import db
+
 
 load_dotenv()
 bot = Bot(token=os.getenv('BOT_TOKEN'))
@@ -28,7 +28,7 @@ async def cmd_start(message: Message):
 async def fotka(message: Message):
     link = message.photo[-1].file_id
     tempfile = await bot.download(link, './temp.png')
-    img = cv2.imread('./temp.png')
+    img = Image.open('./temp.png')
     qr_values = decode(img)
     answer = 'Не удалось прочитать qr-код'
     for i in qr_values:
