@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 import json
 import asyncio
+import requests
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import CommandStart, Command
@@ -19,6 +20,14 @@ bot = Bot(token=os.getenv('BOT_TOKEN'))
 dp = Dispatcher()
 
 
+async def external_decode_qr():
+    url = 'http://api.qrserver.com/v1/read-qr-code/'
+    img = open('./temp.png', 'rb')
+    files = {'file': img}
+    responce = await requests.post(url, data={'MAX_FILE_SIZE': '1048576', }, files = files)
+    return responce
+
+
 @dp.message(CommandStart())
 async def cmd_start(message: Message):
     await message.answer('Пришли фото чека. Я попытаюсь распознать и записать результат распознавания в базу')
@@ -30,15 +39,17 @@ async def fotka(message: Message):
     tempfile = await bot.download(link, './temp.png')
     img = Image.open('./temp.png')
     qr_values = decode(img)
-    answer = 'Не удалось прочитать qr-код'
-    for i in qr_values:
-        qr_data = i.data.decode("utf-8").split('&')
-        summa = qr_data[1]
-        answer = 'Сумма: ' + summa
-        ticket = Ticket()
-        ticket.tg_id = message.from_user.id
-        ticket.qr_value = json.dumps(qr_data)
-        await insert_ticket(session_maker, ticket)
+    if type(qr_values) is list:
+        for i in qr_values:
+            qr_data = i.data.decode("utf-8").split('&')
+            summa = qr_data[1]
+            answer = 'Сумма: ' + summa
+            ticket = Ticket()
+            ticket.tg_id = message.from_user.id
+            ticket.qr_value = json.dumps(qr_data)
+            await insert_ticket(session_maker, ticket)
+    else:
+        answer = 'Не удалось прочитать qr-код'
     await message.answer(answer)
 
 
