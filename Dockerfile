@@ -22,7 +22,7 @@ RUN pip3 install poetry
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi --no-dev
 
-Expose 80
+EXPOSE 80
 
 #RUN apt-get -y install libsm6 libxext6 libxrender-dev
 #CMD ["python3", "bot.py"]
