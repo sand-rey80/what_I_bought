@@ -24,8 +24,12 @@ async def external_decode_qr():
     url = 'http://api.qrserver.com/v1/read-qr-code/'
     img = open('./temp.png', 'rb')
     files = {'file': img}
-    responce = await requests.post(url, data={'MAX_FILE_SIZE': '1048576', }, files = files)
-    return responce
+    responce = requests.post(url, data={'MAX_FILE_SIZE': '1048576', }, files = files)
+    if responce.status_code == 200:
+        result = responce.text
+    else:
+        result = ''
+    return result
 
 
 @dp.message(CommandStart())
@@ -38,6 +42,7 @@ async def fotka(message: Message):
     link = message.photo[-1].file_id
     tempfile = await bot.download(link, './temp.png')
     img = Image.open('./temp.png')
+    #qr_values = await external_decode_qr()
     qr_values = decode(img)
     if type(qr_values) is list:
         for i in qr_values:
@@ -49,7 +54,10 @@ async def fotka(message: Message):
             ticket.qr_value = json.dumps(qr_data)
             await insert_ticket(session_maker, ticket)
     else:
-        answer = 'Не удалось прочитать qr-код'
+        if os.getenv('USE_EXTERNAL_QR_DECODE_SERVICE'):
+            qr_values = await external_decode_qr()
+        else:
+            answer = 'Не удалось прочитать qr-код'
     await message.answer(answer)
 
 

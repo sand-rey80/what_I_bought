@@ -22,12 +22,9 @@ RUN pip3 install poetry
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi --no-dev
 
-EXPOSE 80
-
 #RUN apt-get -y install libsm6 libxext6 libxrender-dev
 #CMD ["python3", "bot.py"]
-#CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
-CMD ["sh", "-c", "python3", "bot.py", "&", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
-
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+#CMD ["sh", "-c", "python3", "bot.py", "&", "guvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 #CMD ["supervisord", "-c", "/etc/supervisord.conf"]
