@@ -26,6 +26,11 @@ class TicketORM(BaseModel):
         from_attributes = True
 
 
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+
 @app.get("/tickets", response_model=List[TicketORM])
 async def get(date_from, date_to):
     date_df = datetime.datetime.strptime(date_from, '%Y-%m-%d')
