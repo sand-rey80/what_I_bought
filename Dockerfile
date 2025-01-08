@@ -14,17 +14,12 @@ COPY . .
 #RUN apt-get install curl --no-install-recommends -y
 #RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/etc/poetry python3 -
 
-#RUN apt-get install -y --no-cache supervisor
-#COPY supervisord.conf /etc/supervisord.conf
-
 RUN pip3 install poetry
 
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi --no-dev
 
-#RUN apt-get -y install libsm6 libxext6 libxrender-dev
-#CMD ["python3", "bot.py"]
-CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000"]
-#CMD ["sh", "-c", "python3", "bot.py", "&", "guvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-
-#CMD ["supervisord", "-c", "/etc/supervisord.conf"]
+# If running local for debug
+#CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000"]
+# If running behind a proxy like Nginx or Traefik add --proxy-headers
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000" "--proxy-headers"]
