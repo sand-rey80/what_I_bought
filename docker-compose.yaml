@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+    web:
+        image: nginx:latest
+        ports:
+          - 80:80
+          - 443:443
+        volumes:
+          - ./nginx/fastapi.conf:/etc/nginx/conf.d/fastapi.conf
+          - /etc/letsencrypt:/etc/letsencrypt
+        depends_on: 
+          - app
+     
+    app:
+        build: .
+        expose:
+          - 8000
+        ports:
+          - 8000:8000
