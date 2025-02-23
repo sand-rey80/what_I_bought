@@ -21,4 +21,4 @@ RUN poetry config virtualenvs.create false && poetry install --no-interaction --
 # If running local for debug
 #CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000"]
 # If running behind a proxy like Nginx or Traefik add --proxy-headers
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000" "--proxy-headers"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000" "--proxy-headers"]

@@ -4,7 +4,7 @@
 
 import asyncio
 
-# import uvicorn
+import uvicorn
 from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
 from bot import update_queue
