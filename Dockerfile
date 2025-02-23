@@ -1,6 +1,4 @@
-#FROM python:3.10-slim-buster
-
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
+FROM python:3.10
 
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONHASHSEED=random \
@@ -18,14 +16,10 @@ COPY . .
 
 RUN pip3 install poetry
 
-RUN poetry config virtualenvs.create false && \
- poetry install --no-interaction --no-ansi --only main --no-root
-
-EXPOSE 8000
-
-
-CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
+RUN poetry config virtualenvs.create false \
+  && poetry install --no-interaction --no-ansi --no-dev
 
 # If running local for debug
 #CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000"]
 # If running behind a proxy like Nginx or Traefik add --proxy-headers
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000" "--proxy-headers"]

@@ -2,7 +2,7 @@ import datetime
 from typing import List, Any, Awaitable, Callable, Dict
 from sqlalchemy import func, select, DateTime
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
+from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, class_mapper
 
 from aiogram import BaseMiddleware
 from aiogram.types import Message, TelegramObject

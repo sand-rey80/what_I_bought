@@ -7,7 +7,8 @@ import requests
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import CommandStart, Command
-from aiogram.types import Message
+from aiogram.types import Message, Update
+#from aiogram.utils import exceptions
 
 from pyzbar.pyzbar import decode
 from PIL import Image
@@ -18,7 +19,8 @@ from db import DataBaseSession, session_maker, insert_ticket, Ticket, create_tab
 load_dotenv()
 bot = Bot(token=os.getenv('BOT_TOKEN'))
 dp = Dispatcher()
-
+update_queue = asyncio.Queue()
+semaphore = asyncio.Semaphore(10)
 
 async def external_decode_qr():
     url = 'http://api.qrserver.com/v1/read-qr-code/'
@@ -70,13 +72,27 @@ async def bot_stop(bot):
     print('stop bot')
     #await drop_all_tables()
 
+async def process_update(update: Update):
+    try:
+        async with semaphore:  # Ограничиваем количество задач
+            await dp.feed_update(bot, update)
+    except Exception as e:
+        print(f"Ошибка при обработке обновления: {e}")
 
 async def main():
     dp.startup.register(bot_start)
     dp.shutdown.register(bot_stop)
     dp.update.middleware(DataBaseSession(session_pool=session_maker))
-    await dp.start_polling(bot)
-
+    #await dp.start_polling(bot)
+    # Запускаем обработку обновлений из очереди
+    try:
+        while True:
+            update = await update_queue.get()
+            await process_update(update)
+    except asyncio.CancelledError:
+        print("Приложение остановлено")
+    except Exception as e:
+        print(f"Ошибка в main: {e}")
 
 try:
     asyncio.run(main())
