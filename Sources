@@ -5,3 +5,5 @@ https://github.com/valiotti/get-receipts/blob/master/nalog_python.py
 
 Сервис проброса локалхоста в эти ваши интернеты
 ssh -R 80:localhost:8000 serveo.net
+
+curl "https://api.telegram.org/bot5660626772:AAEodkWUcVyMBCAEGVtktDiR7F_UfkZ-ffQ/setWebhook?url=https://1493535-ck89185.tw1.ru/tghook"
