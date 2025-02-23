@@ -16,7 +16,7 @@ COPY . .
 
 RUN pip3 install poetry
 
-RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi --without dev
+RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
 
 # If running local for debug
 #CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000"]
