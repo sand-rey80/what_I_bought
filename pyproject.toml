@@ -20,7 +20,7 @@ pyqrcode = "^1.2.1"
 pillow = "^11.0.0"
 
 [tool.poetry.packages]
-include = "app" # Укажите папку, содержащую ваш код
+include = ["app"] # Укажите папку, содержащую ваш код
 
 [build-system]
 requires = ["poetry-core"]
