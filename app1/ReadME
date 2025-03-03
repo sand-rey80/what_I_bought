@@ -1,0 +1,79 @@
+Неочевидность - как запустить чужой проект написанный на poetry
+
+Clone the repo,
+    install poetry
+descend into the repo and
+    poetry run python my_script.py
+
+
+
+
+Если нам нужно сделать сервис доступный по https
+
+Примерно так https://habr.com/ru/articles/819957/
+
+Вторая часть https://habr.com/ru/articles/820093/
+
+
+
+
+1. Арендуем сервер в интернетах у провайдера, который даст доменное имя и белый ip-адрес
+
+2. Проверяем, что оно резольвится nslookup my.domain.com - в ответе должны получить ip нашего сервера
+
+3. Получаем сертификат для домена
+    sudo apt install letsencrypt
+Разблокируем 80-й порт для надежности
+    sudo fuser -k 80/tcp
+Далее запустим выпуск сертификатов и укажем имя домена при запросе от этой команды
+    sudo certbot certonly --standalone
+
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/1493535-ck89185.tw1.ru/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/1493535-ck89185.tw1.ru/privkey.pem
+   Your certificate will expire on 2025-04-09. To obtain a new or
+   tweaked version of this certificate in the future, simply run
+   certbot again. To non-interactively renew *all* of your
+   certificates, run "certbot renew"
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+
+
+
+4. Устанавливаем NGINX
+	sudo apt install nginx
+	sudo nginx -s stop
+
+Впишем конфигурацию сайта
+	sudo nano /etc/nginx/nginx.conf	
+	
+
+
+http {
+    
+
+    server {
+          listen 80;
+          listen 443 ssl;
+		  
+		  server_name 1493535-ck89185.tw1.ru;
+		  
+          ssl_certificate /etc/letsencrypt/live/1493535-ck89185.tw1.ru/fullchain.pem;
+          ssl_certificate_key /etc/letsencrypt/live/1493535-ck89185.tw1.ru/privkey.pem;
+          location / {
+
+              proxy_pass http://allbackend/;
+           }   
+     }
+
+}
+
+events { }
+
+sudo service nginx restart
+	
+
