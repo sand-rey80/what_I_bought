@@ -11,14 +11,10 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
 
 COPY . .
 
-#RUN apt-get install curl --no-install-recommends -y
-#RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/etc/poetry python3 -
-
 RUN pip3 install poetry
+
+RUN ls -l && cat pyproject.toml # Добавленные команды
 
 RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
 
-# If running local for debug
-#CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000"]
-# If running behind a proxy like Nginx or Traefik add --proxy-headers
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
