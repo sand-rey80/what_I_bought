@@ -15,6 +15,6 @@ RUN pip3 install poetry
 
 RUN ls -l && cat pyproject.toml # Добавленные команды
 
-RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
+RUN poetry --version && poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
