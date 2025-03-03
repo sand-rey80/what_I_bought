@@ -17,4 +17,4 @@ RUN ls -l && cat pyproject.toml # Добавленные команды
 
 RUN poetry --version && poetry config virtualenvs.create false --local && poetry install --no-interaction --no-ansi
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
