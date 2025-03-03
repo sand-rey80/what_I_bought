@@ -1,26 +1,9 @@
 [tool.poetry]
-name = "geldebot-qr"
+name = "test-project"
 version = "0.1.0"
-description = ""
-authors = ["sand-rey80 <sand-rey80@ya.ru>"]
-#readme = "README.md"
-
-
-[tool.poetry.dependencies]
-python = "^3.11"
-fastapi = {extras = ["all"], version = "^0.115.4"}
-uvicorn = "^0.32.0"
-sqlalchemy = {extras = ["asyncio"], version = "^2.0.36"}
-pydantic = "^2.9.2"
-aiosqlite = "^0.20.0"
-requests = "^2.32.3"
-aiogram = "^3.15.0"
-pyzbar = "^0.1.9"
-pyqrcode = "^1.2.1"
-pillow = "^11.0.0"
 
 [tool.poetry.packages]
-include = ["app1"] # Укажите папку, содержащую ваш код
+include = ["app"]
 
 [build-system]
 requires = ["poetry-core"]
